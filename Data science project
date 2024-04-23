@@ -1,0 +1,53 @@
+class AttendanceTracker:
+    def __init__(self):
+        self.attendance_records = {}
+
+    def add_student(self, student_id, name):
+        if student_id not in self.attendance_records:
+            self.attendance_records[student_id] = {
+                'name': name,
+                'attendance': {}
+            }
+            print(f"Student '{name}' added successfully with ID: {student_id}.")
+        else:
+            print(f"Student with ID {student_id} already exists.")
+
+    def mark_attendance(self, student_id, date):
+        if student_id in self.attendance_records:
+            if date not in self.attendance_records[student_id]['attendance']:
+                self.attendance_records[student_id]['attendance'][date] = True
+                print(f"Attendance marked for student ID {student_id} on {date}.")
+            else:
+                print(f"Attendance for student ID {student_id} on {date} already marked.")
+        else:
+            print(f"Student with ID {student_id} not found.")
+
+    def view_attendance(self, student_id):
+        if student_id in self.attendance_records:
+            print(f"Attendance record for student ID {student_id}:")
+            for date, attended in self.attendance_records[student_id]['attendance'].items():
+                status = "Present" if attended else "Absent"
+                print(f"- {date}: {status}")
+        else:
+            print(f"Student with ID {student_id} not found.")
+
+# Example usage:
+tracker = AttendanceTracker()
+
+# Add students
+tracker.add_student(1, "Alice")
+tracker.add_student(2, "Bob")
+tracker.add_student(3, "Charlie")
+
+# Mark attendance
+tracker.mark_attendance(1, "2024-04-20")
+tracker.mark_attendance(2, "2024-04-20")
+tracker.mark_attendance(1, "2024-04-22")
+tracker.mark_attendance(3, "2024-04-22")
+tracker.mark_attendance(1, "2024-04-24")
+
+# View attendance
+tracker.view_attendance(1)
+tracker.view_attendance(2)
+tracker.view_attendance(3)
+tracker.view_attendance(4)  # Student ID not found
